@@ -1,0 +1,32 @@
+[package]
+name = "nyx-shield"
+version = "0.1.0"
+edition = "2021"
+authors = ["ZengLLQ <zengllq@users.noreply.github.com>"]
+description = "High-Performance Zero-Knowledge Bulletproofs & Confidential Asset Settlement Protocol in Rust"
+license = "MIT"
+repository = "https://github.com/ZengLLQ/nyx-shield"
+readme = "README.md"
+keywords = ["zero-knowledge", "bulletproofs", "privacy", "confidential-transactions", "cryptography"]
+categories = ["cryptography"]
+
+[dependencies]
+curve25519-dalek = { version = "4.1", features = ["rand_core", "serde"] }
+sha2 = "0.10"
+rand = "0.8"
+rand_core = "0.6"
+subtle = "2.6"
+serde = { version = "1.0", features = ["derive"] }
+hex = "0.4"
+thiserror = "1.0"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[[example]]
+name = "confidential_settlement"
+path = "examples/confidential_settlement.rs"
+
+[[example]]
+name = "range_proof_demo"
+path = "examples/range_proof_demo.rs"

@@ -1,0 +1,38 @@
+name: main CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    name: Rust ${{ matrix.toolchain }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        toolchain: [stable, beta]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Rust Toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+
+      - name: Build Library and Examples
+        run: cargo build --verbose --examples
+
+      - name: Run Test Suite
+        run: cargo test --verbose
+
+      - name: Run Confidential Settlement Simulation
+        run: cargo run --example confidential_settlement
+
+      - name: Run Range Proof Demo Benchmark
+        run: cargo run --example range_proof_demo
